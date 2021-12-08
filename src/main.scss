@@ -1,0 +1,40 @@
+$--unnamed-color-ffffff: #FFFFFF;
+$--unnamed-color-b4b4b4: #B4B4B4;
+$--unnamed-color-d6d6d6: #D6D6D6;
+$--unnamed-color-007bff: #007BFF;
+$--unnamed-color-24242600: #242426;
+$--unnamed-color-6b6b6b: #6B6B6B;
+$--unnamed-color-7ee010: #7EE010;
+$--unnamed-color-356203: #356203;
+$--unnamed-color-24242: #242424;
+$--unnamed-color-002399: #002399;
+
+html{
+  --main-color: #002399;
+  --sub-color: #ffffff;
+}
+
+.BLACK{
+  --main-color:#242426;
+  --sub-color: #ffffff;
+}
+
+.BLUE{
+  --main-color: #002399;
+  --sub-color: #ffffff;
+}
+
+.BLUE_SECOND{
+  --main-color:: #007BFF;
+  --sub-color: #ffffff;
+}
+
+.BLUE_THIRD{
+  --main-color: #25F7F2;
+  --sub-color: #ffffff;
+}
+
+.GREEN{
+  --main-color: #7EE010;
+  --sub-color: #ffffff;
+}

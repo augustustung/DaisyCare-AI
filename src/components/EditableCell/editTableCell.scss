@@ -1,0 +1,31 @@
+.editable-cell {
+  &__wrap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &__wrap_null {
+    width: 100%;
+    border-radius: 8px;
+    padding: 3px 5px;
+    border: 1px solid #d9d9d9;
+    cursor: pointer;
+    color: #bfbfbf !important;
+    font-weight: 500 !important;
+
+  }
+}
+
+.RED_LP {
+  .LP {
+    color: #ce0000;
+  }
+}
+
+.GREEN_LP {
+  .LP {
+    color: #008e27;
+  }
+}

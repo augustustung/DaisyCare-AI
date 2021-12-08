@@ -1,0 +1,10 @@
+.fc-toolbar-chunk {
+  .fc-button-group {
+    .fc-sidebarToggle-button, &.fc-button, &.fc-button-primary {
+      display: none;
+    }
+    .fc--button, &.fc-button, &.fc-button-primary {
+      display: none;
+    }
+  }
+}

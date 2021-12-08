@@ -1,0 +1,13 @@
+.ant-layout {
+  min-height: 100vh;
+
+  .conent{
+    min-height: calc(100vh - 140px);
+  }
+}
+
+.header__logo {
+  img {
+    max-height: 40px;
+  }
+}

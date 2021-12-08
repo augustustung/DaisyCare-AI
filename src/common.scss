@@ -1,0 +1,115 @@
+@import "./main";
+
+.pointer {
+  cursor: pointer;
+}
+
+.displayNone{
+  display: none;
+}
+.ant-input-number{
+  width: 100% !important;
+}
+
+.ant-layout, .ant-layout-footer{
+  background-color: #fff;
+}
+
+.logo{
+  max-width: 70px;
+  max-height: 44px;
+}
+
+.header {
+
+  .ant-menu-title-content {
+    text-align: left;
+    font: normal normal 600 16px/20px sans-serif;
+    letter-spacing: 0px;
+    color: #6B6B6B;
+  }
+
+  .ant-menu-item-active.active {
+    .ant-menu-title-content {
+      color: #242426;
+      font: normal normal bold 16px/20px sans-serif;
+    }
+  }
+  @media (max-width: 768px) {
+    overflow-x: auto;
+    padding: unset;
+
+    &__container{ 
+      width: unset !important;
+    }
+
+    &__button {
+      margin-left: auto;
+    }
+
+    &_content{
+      width: unset !important;
+      .ant-menu-item-only-child:first-child {
+        padding-left: unset;
+      }
+    }
+  }
+
+  @media(max-width: 813px) {
+    &__logo {
+      display: none;
+    }
+  }
+}
+.ant-layout-header, .ant-menu, .ant-menu-dark {
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border-bottom: none;
+}
+
+.ant-tabs-nav::before {
+  border: none !important;
+}
+
+.ant-tabs-nav-wrap {
+  border: none;
+  outline: none;
+  padding-top: 21.5px;
+}
+
+.ant-tabs-ink-bar {
+  display: none;
+}
+
+.ant-tabs-tab {
+  background: #F5F5F5 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  padding: 9px 12px;
+
+  .ant-tabs-tab-btn {
+    text-align: center;
+    font: normal normal 600 14px/20px sans-serif;
+    letter-spacing: 0px;
+    color: #242426;
+  }
+}
+
+
+
+.ant-tabs-tab-active {
+  background-color: var(--main-color);
+  div {
+    color: #ffffff !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    max-width: unset !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .container {
+    max-width: unset !important;
+  }
+}

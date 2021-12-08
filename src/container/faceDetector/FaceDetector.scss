@@ -1,4 +1,6 @@
 .FaceDetector {
+  min-width: 1200px;
+  min-height: 100vh;
   &__video {
     display: flex;
     justify-content: center;
