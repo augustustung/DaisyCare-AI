@@ -1,0 +1,10 @@
+.FaceDetector {
+  &__video {
+    display: flex;
+    justify-content: center;
+    
+    &__canvas {
+      position: absolute;
+    }
+  }
+}
