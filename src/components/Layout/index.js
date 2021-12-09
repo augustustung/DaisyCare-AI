@@ -14,10 +14,10 @@ function LayoutPage(props) {
     {props.isShowHeader && 
       <Header {...props} />    
     }
-    <div className="container conent">
+    <div className="container conent mb-5">
     <Component {...props} />
     </div>
-    <Footer/>
+    {/* <Footer/> */}
   </Layout>
   );
 

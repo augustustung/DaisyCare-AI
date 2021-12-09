@@ -1,5 +1,4 @@
-export const listTimes = (translation) => ([
-    translation('listSchedules.allTimeline'),
+export const listTimes = [
     '7h - 7h30',
     '7h30 - 8h',
     '8h - 8h30',
@@ -20,4 +19,4 @@ export const listTimes = (translation) => ([
     '16h30 - 17h',
     '17h - 17h30',
     '17h30 - 18h',
-])
+]

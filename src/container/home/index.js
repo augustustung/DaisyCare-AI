@@ -1,5 +1,5 @@
 // ** React Import
-import { useEffect, useRef, memo } from 'react'
+import { useRef, memo } from 'react'
 
 // ** Full Calendar & it's Plugins
 import FullCalendar from '@fullcalendar/react'
@@ -7,39 +7,51 @@ import listPlugin from '@fullcalendar/list'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
+
+import { calendarsColor } from '../../constants/color'
 import './home.scss'
-// ** Custom Components
+import { notification, Card } from 'antd'
+import { useHistory } from 'react-router'
 
-// ** Third Party Components
-import { Card, CardBody } from 'reactstrap'
-import { Menu } from 'react-feather'
-import { notification } from 'antd'
+const date = new Date()
 
-// ** Toast Component
+const fake = [
+  {
+    id: 2,
+    url: '',
+    title: 'Meeting With Client',
+    start: new Date(date.getFullYear(), date.getMonth() + 1, -11),
+    end: new Date(date.getFullYear(), date.getMonth() + 1, -10),
+    allDay: true,
+    extendedProps: {
+      calendar: 'start'
+    }
+  },
+  {
+    id: 3,
+    url: '',
+    title: 'Meeting With Client',
+    start: new Date(date.getFullYear(), date.getMonth() + 1, -11),
+    end: new Date(date.getFullYear(), date.getMonth() + 1, -10),
+    allDay: true,
+    extendedProps: {
+      calendar: 'end'
+    }
+  }
+]
 
 const Calendar = props => {
   // ** Refs
   const calendarRef = useRef(null)
 
   // ** Props
-  const {
-    dispatch,
-    calendarsColor,
-    calendarApi,
-    setCalendarApi,
-    blankEvent,
-    updateEvent
-  } = props
+  const history = useHistory()
 
   // ** UseEffect checks for CalendarAPI Update
-  useEffect(() => {
-    if (calendarApi === null) {
-      setCalendarApi(calendarRef.current.getApi())
-    }
-  }, [calendarApi])
 
   // ** calendarOptions(Props)
   const calendarOptions = {
+    events: fake,
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {
@@ -77,7 +89,7 @@ const Calendar = props => {
     navLinks: true,
 
     eventClassNames({ event: calendarEvent }) {
-      // eslint-disable-next-line no-underscore-dangle
+      // eslint-disable-next-c no-underscore-dangle
       const colorName = calendarsColor[calendarEvent._def.extendedProps.calendar]
 
       return [
@@ -87,7 +99,7 @@ const Calendar = props => {
     },
 
     eventClick({ event: clickedEvent }) {
-      console.log('even click')
+      console.log('even click', clickedEvent)
 
       // * Only grab required field otherwise it goes in infinity loop
       // ! Always grab all fields rendered by form (even if it get `undefined`) otherwise due to Vue3/Composition API you might get: "object is not extensible"
@@ -98,10 +110,7 @@ const Calendar = props => {
     },
 
     dateClick(info) {
-      const ev = blankEvent || {}
-      ev.start = info.date
-      ev.end = info.date
-      console.log('date click')
+      history.push('/detail', { date: info.date })
     },
 
     /*
@@ -110,8 +119,8 @@ const Calendar = props => {
       ? We can use `eventDragStop` but it doesn't return updated event so we have to use `eventDrop` which returns updated event
     */
     eventDrop({ event: droppedEvent }) {
-      dispatch(updateEvent(droppedEvent))
       notification.success('Event Updated')
+      console.log(droppedEvent)
     },
 
     /*
@@ -119,7 +128,6 @@ const Calendar = props => {
       ? Docs: https://fullcalendar.io/docs/eventResize
     */
     eventResize({ event: resizedEvent }) {
-      dispatch(updateEvent(resizedEvent))
       notification.success('Event Updated')
     },
 
@@ -127,10 +135,8 @@ const Calendar = props => {
   }
 
   return (
-    <Card className='shadow-none border-0 mb-0 rounded-0'>
-      <CardBody className='pb-0'>
-        <FullCalendar {...calendarOptions} />{' '}
-      </CardBody>
+    <Card className='shadow-none border-0 mb-0 rounded-0 mt-3'>
+      <FullCalendar {...calendarOptions} />{' '}
     </Card>
   )
 }

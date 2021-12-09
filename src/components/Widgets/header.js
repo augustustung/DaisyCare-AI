@@ -15,15 +15,7 @@ export default function Header(props) {
 
   const FEATURE = [
     {
-      name: translation("header.accreditation"),
-      href: "#",
-    },
-    {
       name: translation('header.customers'),
-      href: "#",
-    },
-    {
-      name: translation('header.schedule'),
       href: "#",
     },
     {
@@ -31,14 +23,6 @@ export default function Header(props) {
       href: "#"
     },
     {
-      name: translation('header.new'),
-      href: "#",
-      isNoHref: false
-    },
-    {
-      name: translation('header.establish'),
-      href: "#",
-    },{
       name: translation('header.management'),
       href: "#"
     }

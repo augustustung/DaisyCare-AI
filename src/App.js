@@ -13,6 +13,7 @@ import './modalCommon.scss'
 import './buttonCommon.scss'
 import './dropDownCommon.scss'
 import 'antd/dist/antd.css'; 
+import Detail from './container/Detail';
 
 export const routes = {
   login: {
@@ -23,6 +24,11 @@ export const routes = {
   timeKeeping: {
     path: "/time-keeping",
     component: FaceDetector,
+    isAuth: true
+  },
+  detail: {
+    path: "/detail",
+    component: Detail,
     isAuth: true
   }
 }
@@ -62,7 +68,7 @@ function App() {
               )
             }
           })}
-          {isUserLoggedIn ? <Route component={(props) => <Layout isShowHeader={true}  {...props} Component={FaceDetector} />} />
+          {isUserLoggedIn ? <Route component={(props) => <Layout isShowHeader={true}  {...props} Component={Home} />} />
             : <Route component={(props) =>  <Layout isShowHeader={false} isShowHeader={false} {...props} Component={LoginV1}/>} /> }
         </Switch>
       </Router>

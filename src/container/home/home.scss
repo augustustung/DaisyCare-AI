@@ -1,3 +1,5 @@
+@import '../../main.scss';
+
 .fc-toolbar-chunk {
   .fc-button-group {
     .fc-sidebarToggle-button, &.fc-button, &.fc-button-primary {
@@ -5,6 +7,118 @@
     }
     .fc--button, &.fc-button, &.fc-button-primary {
       display: none;
+    }
+  }
+}
+
+.fc {
+  .fc-toolbar {
+    .fc-button-group {
+      .fc-button-primary:not(.fc-prev-button):not(.fc-next-button) {
+        background-color: transparent;
+        border-color: #7367f0;
+        text-transform: capitalize;
+        color: #7367f0;
+        .fc-button-active {
+          background-color: rgba(115,103,240,.2)!important;
+          border-color: #7367f0!important;
+          color: #7367f0;
+          box-shadow: none;
+        }
+        &:hover {
+          background-color: rgba(115,103,240,.2)!important;
+          border-color: #7367f0!important;
+          color: #7367f0;
+          box-shadow: none;
+        }
+
+        &:focus {
+          box-shadow: none !important;
+        }
+      }
+      
+      .fc-dayGridMonth-button, .fc-listMonth-button, .fc-timeGridDay-button, .fc-timeGridWeek-button { 
+        padding: 0.55rem 1.5rem;
+      }
+
+      .fc-prev-button, .fc-next-button{
+        background-color: transparent;
+        border: none;
+        color: #7367f0;
+
+        &:focus {
+          box-shadow: 0 0 0 0.2em rgba(#7367f0,0.4)!important;
+        }
+      }
+    }
+  }
+}
+
+.fc-scrollgrid {
+  tbody {
+    .fc-scrollgrid-sync-table {
+      tbody {
+        tr {
+          * {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.bg-light {
+  &-primary {
+    background: rgba(#7367f0, 0.12) !important;
+
+    // Calendar background, color and border color
+    &.fc-h-event,
+    &.fc-v-event {
+      border-color: rgba(115,103,240,.1);
+    }
+
+    .fc-list-event-dot {
+      border-color: #7367f0!important;
+    }
+    
+    .fc-event-title-container {
+      &:hover {
+        background: rgba(#7367f0,.1) !important;
+      }
+    }
+
+    .fc-event-title-container {
+      .fc-event-title {
+        color: #7367f0 !important;
+      }
+    }
+  }
+
+  &-warning {
+    background: rgba(#ff9f43, 0.12) !important;
+
+    // Calendar background, color and border color
+    &.fc-h-event,
+    &.fc-v-event {
+      border-color: rgba(115,103,240,.1);
+    }
+
+    .fc-list-event-dot {
+      border-color: #ff9f43 !important;
+    }
+    
+    .fc-event-title-container {
+      &:hover {
+        background: rgba(#ff9f43,.1) !important;
+      }
+    }
+
+    .fc-event-title-container {
+      .fc-event-title {
+        color: #ff9f43 !important;
+      }
     }
   }
 }
