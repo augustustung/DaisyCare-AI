@@ -15,6 +15,7 @@ import './dropDownCommon.scss'
 import 'antd/dist/antd.css';
 import Detail from './container/Detail';
 import { notification } from 'antd';
+import Setting from './container/Setting'
 
 export const routes = {
   login: {
@@ -30,6 +31,11 @@ export const routes = {
   detail: {
     path: '/detail',
     component: Detail,
+    isAuth: true
+  },
+  setting: {
+    path: '/setting',
+    component: Setting,
     isAuth: true
   }
 }

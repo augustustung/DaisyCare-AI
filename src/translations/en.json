@@ -33,7 +33,7 @@
     "error": "There was an error, please try again",
     "birthday": "Birthday",
     "timeCome": "Time come",
-    "timeGo": "Time go",
+    "timeGo": "Time leave",
     "gender": "Gender",
     "inde": "Index",
     "customer": "Customer",
@@ -51,7 +51,8 @@
     "turnOn": "Turn on camera",
     "turnOff": "Turn off camera",
     "start": "Check attendance",
-    "finish": "Finish"
+    "finish": "Finish",
+    "english": "English"
 
   }
 }

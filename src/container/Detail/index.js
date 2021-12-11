@@ -52,7 +52,7 @@ function Detail() {
       key: 'timeCome',
       dataIndex: 'timeCome',
       render: (value) => {
-        return moment(value).format("hh:mm DD/MM/YYYY")
+        return moment(value).format("LLL")
       }
     },
     {
@@ -60,7 +60,7 @@ function Detail() {
       key: 'timeLeave',
       dataIndex: 'timeLeave',
       render: (value) => {
-        return moment(value).format("hh:mm DD/MM/YYYY")
+        return moment(value).format("LLL")
       }
     },
   ];

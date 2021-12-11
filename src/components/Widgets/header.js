@@ -4,7 +4,7 @@ import { Button, Layout, Menu } from 'antd';
 import { useDispatch } from 'react-redux'
 import { routes } from  "./../../App"
 import { handleSignout } from '../../actions';
-const { Header: HeaderAntd, Sider } = Layout;
+const { Header: HeaderAntd } = Layout;
 
 export default function Header(props) {
   const { t:translation } = useTranslation()
@@ -16,7 +16,7 @@ export default function Header(props) {
   const FEATURE = [
     {
       name: translation('landing.setting'),
-      href: "#",
+      href: routes.setting.path,
     },
     {
       name: translation("landing.statistical"),
@@ -51,11 +51,7 @@ export default function Header(props) {
             <>
               <Menu.Item
                   className={pathName === item.href ? 'active' : '' }
-                  onClick={() => {
-                  if( !item.isNoHref){
-                    _onClick(item.href)
-                  }
-                }} 
+                  onClick={() => {_onClick(item.href)}} 
                 key={item.href}
               >
                 {item.name.toUpperCase()}
