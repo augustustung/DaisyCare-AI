@@ -110,21 +110,25 @@ function FaceDetector(props) {
     }
 
     if(!selectedDevice) {
-      notification.warn({
-        message: "",
-        description: translation('landing.selectDevice')
-      })
-      return
+      navigator.getUserMedia(
+        { video: { } },
+        stream => {
+          videoRef.current.srcObject = stream
+          videoRef.current.play()
+        },
+        err => console.error(err)
+      )
+    } else {
+      navigator.getUserMedia(
+        { video: { deviceId: selectedDevice } },
+        stream => {
+          videoRef.current.srcObject = stream
+          videoRef.current.play()
+        },
+        err => console.error(err)
+      )
     }
 
-    navigator.getUserMedia(
-      { video: { deviceId: selectedDevice } },
-      stream => {
-        videoRef.current.srcObject = stream
-        videoRef.current.play()
-      },
-      err => console.error(err)
-    )
     handleOnPlayVideo()
   }
 
