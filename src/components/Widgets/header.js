@@ -15,15 +15,15 @@ export default function Header(props) {
 
   const FEATURE = [
     {
-      name: translation('header.customers'),
+      name: translation('landing.setting'),
       href: "#",
     },
     {
-      name: translation("listCustomers.statistical"),
+      name: translation("landing.statistical"),
       href: "#"
     },
     {
-      name: translation('header.management'),
+      name: translation('landing.management'),
       href: "#"
     }
   ]
@@ -67,7 +67,7 @@ export default function Header(props) {
         <Menu.Item
           className="header__button"
         >
-          <Button type="primary" onClick={() => dispatch(handleSignout())}>{translation('header.logout')}</Button>
+          <Button type="primary" onClick={() => dispatch(handleSignout())}>{translation('landing.logout')}</Button>
         </Menu.Item>
         </div>
       </Menu>

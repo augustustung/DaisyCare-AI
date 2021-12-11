@@ -1,6 +1,6 @@
 export const calendarsColor = {
-  start: 'primary',
-  end: 'warning',
+  START: 'primary',
+  END: 'warning',
   Holiday: 'success',
   Personal: 'danger',
   ETC: 'info'

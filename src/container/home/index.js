@@ -1,5 +1,5 @@
 // ** React Import
-import { useRef, memo } from 'react'
+import React, { useRef, memo, useEffect, useState } from 'react'
 
 // ** Full Calendar & it's Plugins
 import FullCalendar from '@fullcalendar/react'
@@ -12,16 +12,17 @@ import { calendarsColor } from '../../constants/color'
 import './home.scss'
 import { notification, Card } from 'antd'
 import { useHistory } from 'react-router'
-
-const date = new Date()
+import Request from '../../services/request';
+import Create from '../Create'
+import moment from 'moment'
 
 const fake = [
   {
     id: 2,
     url: '',
-    title: 'Meeting With Client',
-    start: new Date(date.getFullYear(), date.getMonth() + 1, -11),
-    end: new Date(date.getFullYear(), date.getMonth() + 1, -10),
+    title: 'Start Time keeping',
+    start: new Date(),
+    end: new Date(),
     allDay: true,
     extendedProps: {
       calendar: 'start'
@@ -30,9 +31,9 @@ const fake = [
   {
     id: 3,
     url: '',
-    title: 'Meeting With Client',
-    start: new Date(date.getFullYear(), date.getMonth() + 1, -11),
-    end: new Date(date.getFullYear(), date.getMonth() + 1, -10),
+    title: 'End Time keeping',
+    start: new Date(),
+    end: new Date(),
     allDay: true,
     extendedProps: {
       calendar: 'end'
@@ -43,15 +44,18 @@ const fake = [
 const Calendar = props => {
   // ** Refs
   const calendarRef = useRef(null)
+  const [eventData, setEventData] = useState([])
 
   // ** Props
   const history = useHistory()
+  const [isOpenModal, setIsOpenModal] = useState(false)
+  const [infoDate, setInfoDate] = useState(null)
 
   // ** UseEffect checks for CalendarAPI Update
 
   // ** calendarOptions(Props)
   const calendarOptions = {
-    events: fake,
+    events: eventData,
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     initialView: 'dayGridMonth',
     headerToolbar: {
@@ -100,6 +104,7 @@ const Calendar = props => {
 
     eventClick({ event: clickedEvent }) {
       console.log('even click', clickedEvent)
+      history.push('/detail', { eventId: clickedEvent._def.publicId })
 
       // * Only grab required field otherwise it goes in infinity loop
       // ! Always grab all fields rendered by form (even if it get `undefined`) otherwise due to Vue3/Composition API you might get: "object is not extensible"
@@ -110,7 +115,8 @@ const Calendar = props => {
     },
 
     dateClick(info) {
-      history.push('/detail', { date: info.date })
+      setIsOpenModal(true)
+      setInfoDate(info.date)
     },
 
     /*
@@ -119,7 +125,10 @@ const Calendar = props => {
       ? We can use `eventDragStop` but it doesn't return updated event so we have to use `eventDrop` which returns updated event
     */
     eventDrop({ event: droppedEvent }) {
-      notification.success('Event Updated')
+      notification.success({
+        message: "",
+        description: 'Event Updated'
+      })
       console.log(droppedEvent)
     },
 
@@ -134,10 +143,70 @@ const Calendar = props => {
     ref: calendarRef,
   }
 
+  function fetchData() {
+    Request({
+      method: "POST",
+      path: '/get-list-event'
+    }).then(result => {
+      if(result && result.length > 0) {
+        let resData = [];
+        for(let i = 0; i <result.length; i++) {
+          let newData = {
+            id: result[i]._id,
+            url: '',
+            title: result[i].title,
+            start: result[i].startDate,
+            end: result[i].endDate,
+            allDay: true,
+            extendedProps: {
+              calendar: result[i].eventType
+            }
+          }
+          resData.push(newData);
+        }
+        setEventData(resData)
+      }
+    })
+  }
+
+  useEffect(() => {
+    fetchData()
+  },[])
+
+  const onCreateEvent = (data) => {
+    Request({
+      method: "POST",
+      path: '/create-event',
+      data: data
+    }).then(result => {
+      if(result && result === 'ok') {
+        notification.success({
+          message: '',
+          description: "Tạo lịch thành công"
+        })
+        setIsOpenModal(false)
+        fetchData()
+      } else {
+        notification.error({
+          message: "",
+          description: "Tạo thất bại vui lòng thử lại sau"
+        })
+      }
+    })
+  }
+
   return (
-    <Card className='shadow-none border-0 mb-0 rounded-0 mt-3'>
-      <FullCalendar {...calendarOptions} />{' '}
-    </Card>
+    <>
+      <Card className='shadow-none border-0 mb-0 rounded-0 mt-3'>
+        <FullCalendar {...calendarOptions} />{' '}
+      </Card>
+      <Create 
+        openModal={isOpenModal} 
+        onCancel={() => setIsOpenModal(false)}
+        infoDate={infoDate}
+        onCreateEvent={onCreateEvent}
+      />
+    </>
   )
 }
 

@@ -1,4 +1,7 @@
 .FaceDetector {
+  min-height: 100vh;
+  padding-top: 30px;
+  
   &__video {
     display: flex;
     justify-content: center;
@@ -6,5 +9,10 @@
     &__canvas {
       position: absolute;
     }
+  }
+  &_title {
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
   }
 }

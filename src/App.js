@@ -12,8 +12,9 @@ import './tableCommon.scss'
 import './modalCommon.scss'
 import './buttonCommon.scss'
 import './dropDownCommon.scss'
-import 'antd/dist/antd.css'; 
+import 'antd/dist/antd.css';
 import Detail from './container/Detail';
+import { notification } from 'antd';
 
 export const routes = {
   login: {
@@ -24,10 +25,10 @@ export const routes = {
   timeKeeping: {
     path: "/time-keeping",
     component: FaceDetector,
-    isAuth: true
+    isAuth: false
   },
   detail: {
-    path: "/detail",
+    path: '/detail',
     component: Detail,
     isAuth: true
   }
@@ -39,39 +40,43 @@ routes.home = {
   isAuth: true
 }
 
-function App() { 
+function App() {
   const user = useSelector((state) => state.member)
   const { isUserLoggedIn } = user
-  
+
+  notification.config({
+    duration: 2
+  })
+
   return (
     <Router>
-        <Switch>
-          {Object.keys(routes).map((key, index)=>{
-            if(isUserLoggedIn && routes[key].isAuth){
-              return (
-                <Route 
-                  key={index} 
-                  extract 
-                  path={routes[key].path} 
-                  component={(props) => <Layout  {...props} Component={routes[key].component} isShowHeader={true} />} 
-                />
-              ) 
-            }else if( !routes[key].isAuth ){
-              return (
-                <Route 
-                  key={index} 
-                  extract 
-                  path={routes[key].path} 
-                  component={(props) => <Layout  {...props} Component={routes[key].component} isShowHeader={false}/> }
-                  isShowHeader={false}
-                />
-              )
-            }
-          })}
-          {isUserLoggedIn ? <Route component={(props) => <Layout isShowHeader={true}  {...props} Component={Home} />} />
-            : <Route component={(props) =>  <Layout isShowHeader={false} isShowHeader={false} {...props} Component={LoginV1}/>} /> }
-        </Switch>
-      </Router>
+      <Switch>
+        {Object.keys(routes).map((key, index) => {
+          if (isUserLoggedIn && routes[key].isAuth) {
+            return (
+              <Route
+                key={index}
+                extract
+                path={routes[key].path}
+                component={(props) => <Layout  {...props} Component={routes[key].component} isShowHeader={true} />}
+              />
+            )
+          } else if (!routes[key].isAuth) {
+            return (
+              <Route
+                key={index}
+                extract
+                path={routes[key].path}
+                component={(props) => <Layout  {...props} Component={routes[key].component} isShowHeader={false} />}
+                isShowHeader={false}
+              />
+            )
+          }
+        })}
+        {isUserLoggedIn ? <Route component={(props) => <Layout isShowHeader={true}  {...props} Component={Home} />} />
+          : <Route component={(props) => <Layout isShowHeader={false} isShowHeader={false} {...props} Component={FaceDetector} />} />}
+      </Switch>
+    </Router>
   );
 }
 
