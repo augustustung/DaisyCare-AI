@@ -14,32 +14,6 @@ import { notification, Card } from 'antd'
 import { useHistory } from 'react-router'
 import Request from '../../services/request';
 import Create from '../Create'
-import moment from 'moment'
-
-const fake = [
-  {
-    id: 2,
-    url: '',
-    title: 'Start Time keeping',
-    start: new Date(),
-    end: new Date(),
-    allDay: true,
-    extendedProps: {
-      calendar: 'start'
-    }
-  },
-  {
-    id: 3,
-    url: '',
-    title: 'End Time keeping',
-    start: new Date(),
-    end: new Date(),
-    allDay: true,
-    extendedProps: {
-      calendar: 'end'
-    }
-  }
-]
 
 const Calendar = props => {
   // ** Refs

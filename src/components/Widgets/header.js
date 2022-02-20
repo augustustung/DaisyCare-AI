@@ -21,10 +21,6 @@ export default function Header(props) {
     {
       name: translation("landing.statistical"),
       href: "#"
-    },
-    {
-      name: translation('landing.management'),
-      href: "#"
     }
   ]
 
@@ -41,7 +37,7 @@ export default function Header(props) {
       >
         <div className={`d-flex justify-content-center w-100 header__container}`}>
           <Menu.Item className="header__logo" onClick={() => history.replace("/")}>
-            <img src="https://i.pinimg.com/originals/ee/ab/a8/eeaba8cbb2a8e173f953aba34579c71e.jpg" className="logo" alt="logo"/>
+            <img src={window.origin + "/logo.png"} className="logo" alt="logo"/>
           </Menu.Item>
           {/* {stationsLogo !== ""  && stationsLogo ? (<img src={stationsLogo} className="logo" alt="logo" />) : 
           <img src={IconLogo} className="logo" alt="logo"/> } */}

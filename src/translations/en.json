@@ -52,7 +52,9 @@
     "turnOff": "Turn off camera",
     "start": "Check attendance",
     "finish": "Finish",
-    "english": "English"
-
+    "english": "English",
+    "staffName": "Enter staff's name",
+    "required": "Not valid",
+    "uploadImage": "Upload image (maximum 6)"
   }
 }

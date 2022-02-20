@@ -22,6 +22,7 @@ function FaceDetector(props) {
   const [selectedDevice, setSelectedDevice] = useState(null)
   const [disableAll, setDisableAll] = useState(true)
   const [selectedOptionCheck, setSelectedOptionCheck] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   async function loadTrainingData() {
     const labels = ['Bùi Huy Tùng']
@@ -56,6 +57,7 @@ function FaceDetector(props) {
         message: "",
         description: translation('landing.loadDataDone')
       })
+      setLoading(false)
     }
     loadModels()
   }, [])
@@ -243,46 +245,57 @@ function FaceDetector(props) {
   }
 
   return (
-    <div className="FaceDetector">
-      <div className='w-100 d-flex justify-content-end'>
-        <Button type='primary' onClick={() => props.history.push('/login')}>{translation('landing.login')}</Button>
-      </div>
-      <div className='w-100 text-center FaceDetector_title'>Chấm công ngày {moment(new Date()).format('DD/MM/YYYY')}</div>
-      <div className='row pt-3'>
-        <div className='col-5'>
-          <Select className='w-100'  placeholder={translation('landing.selectDevice')} onChange={e => {
-            setSelectedDevice(e)
-          }}>
-            {
-              listUserDevices && listUserDevices.length > 0 && listUserDevices.map(item => {
-                return (
-                  <Select.Option key={Math.random()} value={item.value}>{item.text}</Select.Option>
-                )
-              })
-            }
-          </Select>
+    <>
+      {
+        loading && (
+          <div class="text-center fixed">
+            <div class="spinner-grow text-primary" role="status">
+              <span class="sr-only"/>
+            </div>
+          </div>
+        )
+      }
+      <div className="FaceDetector">
+        <div className='w-100 d-flex justify-content-end'>
+          <Button type='primary' onClick={() => props.history.push('/login')}>{translation('landing.login')}</Button>
         </div>
-        <div className='col-3'>
-          <Space size="small">
-            <Button type='primary' onClick={startVideo}>{translation('landing.turnOn')}</Button>
-            <Button type='default' onClick={stopVideo}>{translation('landing.turnOff')}</Button>
-          </Space>
+        <div className='w-100 text-center FaceDetector_title'>Chấm công ngày {moment(new Date()).format('DD/MM/YYYY')}</div>
+        <div className='row pt-3'>
+          <div className='col-5'>
+            <Select className='w-100'  placeholder={translation('landing.selectDevice')} onChange={e => {
+              setSelectedDevice(e)
+            }}>
+              {
+                listUserDevices && listUserDevices.length > 0 && listUserDevices.map(item => {
+                  return (
+                    <Select.Option key={Math.random()} value={item.value}>{item.text}</Select.Option>
+                  )
+                })
+              }
+            </Select>
+          </div>
+          <div className='col-3'>
+            <Space size="small">
+              <Button type='primary' onClick={startVideo}>{translation('landing.turnOn')}</Button>
+              <Button type='default' onClick={stopVideo}>{translation('landing.turnOff')}</Button>
+            </Space>
+          </div>
+          <div className='col-4'>
+            <Select placeholder="Chọn loại" className='w-50' onChange={(e) => {
+              handleCheckIsCreated(e)
+              setSelectedOptionCheck(e)
+            }}>
+              <Select.Option value="START">{translation('landing.start')}</Select.Option>
+              <Select.Option value="END">{translation('landing.finish')}</Select.Option>
+            </Select>
+          </div>
         </div>
-        <div className='col-4'>
-          <Select placeholder="Chọn loại" className='w-50' onChange={(e) => {
-            handleCheckIsCreated(e)
-            setSelectedOptionCheck(e)
-          }}>
-            <Select.Option value="START">{translation('landing.start')}</Select.Option>
-            <Select.Option value="END">{translation('landing.finish')}</Select.Option>
-          </Select>
+        <div className='FaceDetector__video'>
+          <video autoPlay muted ref={videoRef} width={videoWidth} height={videoHeight} />
+          <canvas className="FaceDetector__video__canvas" ref={canvasRef}></canvas>
         </div>
       </div>
-      <div className='FaceDetector__video'>
-        <video autoPlay muted ref={videoRef} width={videoWidth} height={videoHeight} />
-        <canvas className="FaceDetector__video__canvas" ref={canvasRef}></canvas>
-      </div>
-    </div>
+    </>
   );
 }
 

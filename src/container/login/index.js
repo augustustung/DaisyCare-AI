@@ -36,29 +36,29 @@ const LoginV1 = (props) => {
   return (
     <div className='auth-wrapper auth-v1 px-2'>
       <div className='auth-inner py-2'>
-        <Card className='mb-0' title="Welcome to Daisy Care! 👋">
+        <Card className='mb-0' title="Chào mừng đến Daisy Care! 👋">
           <Form className='auth-login-form mt-2' onFinish={handleSubmit}>
-            <label className='form-label' for='login-email'>
+            <label className='form-label' htmlFor='login-email'>
               Email
             </label>
             <Form.Item
               name="email"
-              rules={[{required: true, message: "Email is required"}]}
+              rules={[{ required: true, message: translation("landing.required") }]}
             >
               <Input type='email' size='middle' id='login-email' placeholder='john@example.com' autoFocus />
             </Form.Item>
-            <label className='form-label' for='login-password'>
-              Password
+            <label className='form-label' htmlFor='login-password'>
+              {translation("landing.password")}
             </label>
             <Form.Item
               name="password"
-              rules={[{required: true, message: "Password is required"}]}
+              rules={[{required: true, message: translation("landing.required") }]}
             >
               <Input.Password size='middle' className='input-group-merge' id='login-password' />
             </Form.Item>
             <Form.Item>
               <Button type='primary' htmlType="submit">
-                Sign in
+                {translation("landing.login")}
               </Button>
             </Form.Item>
           </Form>

@@ -1,7 +1,6 @@
 .FaceDetector {
   min-height: 100vh;
   padding-top: 30px;
-  
   &__video {
     display: flex;
     justify-content: center;
@@ -14,5 +13,24 @@
     font-size: 30px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 600;
+  }
+}
+
+.fixed {
+  position: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: .8;
+  z-index: 3;
+  background-position: 50%;
+  background-color: #000;
+
+  .spinner-grow {
+    margin-top: 10%;
   }
 }

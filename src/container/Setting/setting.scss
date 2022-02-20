@@ -15,3 +15,17 @@
     font-weight: 500;
   }
 }
+
+.folder_name { 
+  display: flex;
+
+  .static {
+    font-size: 23px;
+    width: 17%;
+    svg {
+      height: 30px;
+      margin-top: -7px;
+      width: 30px;
+    }
+  }
+}
