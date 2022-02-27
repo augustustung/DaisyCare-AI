@@ -37,13 +37,13 @@ export default function Header(props) {
       >
         <div className={`d-flex justify-content-center w-100 header__container}`}>
           <Menu.Item className="header__logo" onClick={() => history.replace("/")}>
-            <img src={window.origin + "/logo.png"} className="logo" alt="logo"/>
+            <img src={window.origin + "/logo.png"} alt="logo"/>
           </Menu.Item>
           {/* {stationsLogo !== ""  && stationsLogo ? (<img src={stationsLogo} className="logo" alt="logo" />) : 
           <img src={IconLogo} className="logo" alt="logo"/> } */}
         <div className="d-flex w-100 justify-content-center header_content">
         {
-          FEATURE.map((item, i) => (
+          FEATURE.map((item) => (
             <>
               <Menu.Item
                   className={pathName === item.href ? 'active' : '' }

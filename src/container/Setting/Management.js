@@ -1,10 +1,12 @@
 import { Button, Form, Input, notification, Upload } from 'antd'
 import React from 'react'
 import { FolderOpenOutlined, PlusOutlined } from '@ant-design/icons'
+import Request from '../../services/request'
+import { convertFileToBase64, xoa_dau } from '../../helper/common'
 
 export default function ManagementSection({ translation }) {
   const [form] = Form.useForm()
-
+  const [loading, setLoading] = React.useState()
   const uploadImage = (options) => {
     const { onSuccess } = options;
     onSuccess("Ok");
@@ -17,8 +19,44 @@ export default function ManagementSection({ translation }) {
     </div>
   );
 
-  function handleSave(value) {
-    console.log(value);
+  async function handleSave(value) {
+    setLoading(true)
+    let listImage = []
+    for (let i = 0; i < value.picture.fileList.length; i++) {
+      await convertFileToBase64(value.picture.fileList[i].originFileObj).then(dataUrl => {
+        const newData = dataUrl.replace(/,/gi, '').split('base64')
+          if(newData[1]) {
+            const data = {
+              imageData: newData[1],
+              imageFormat: "jpeg"
+            }
+            listImage.push(data)
+          }
+      })
+    }
+
+    Request({
+      method: "POST",
+      path: "/upload",
+      data: {
+        listImage: listImage,
+        staffName: xoa_dau(value.staffName)
+      }
+    }).then(result =>{ 
+      if(result && result === 'ok') {
+        form.resetFields()
+        notification.success({
+          message: "",
+          description: translation('landing.addStaffSuccess')
+        })
+      } else {
+        notification.error({
+          message: "",
+          description: translation('landing.error')
+        })
+      }
+      setLoading(false)
+    })
   }
 
   return (
@@ -29,7 +67,7 @@ export default function ManagementSection({ translation }) {
           <div className='col-7'>
             <div className='folder_name'>
               <div className='static'>
-                <FolderOpenOutlined />/Media/
+                <FolderOpenOutlined /> @root/Media/
               </div>
               <Form.Item
                 name="staffName"
@@ -44,7 +82,6 @@ export default function ManagementSection({ translation }) {
             name={"picture"}
           >
             <Upload
-              action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
               listType="picture-card"
               accept="image/*"
               multiple
@@ -57,7 +94,7 @@ export default function ManagementSection({ translation }) {
             </Upload>
           </Form.Item>
           <Form.Item>
-            <Button htmlType='submit'>{translation("landing.confirm")}</Button>
+            <Button loading={loading} htmlType='submit'>{translation("landing.confirm")}</Button>
           </Form.Item>
         </div>
       </div>

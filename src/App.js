@@ -29,7 +29,7 @@ export const routes = {
     isAuth: false
   },
   detail: {
-    path: '/detail',
+    path: '/detail/:id',
     component: Detail,
     isAuth: true
   },

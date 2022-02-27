@@ -11,7 +11,6 @@ import interactionPlugin from '@fullcalendar/interaction'
 import { calendarsColor } from '../../constants/color'
 import './home.scss'
 import { notification, Card } from 'antd'
-import { useHistory } from 'react-router'
 import Request from '../../services/request';
 import Create from '../Create'
 
@@ -21,7 +20,6 @@ const Calendar = props => {
   const [eventData, setEventData] = useState([])
 
   // ** Props
-  const history = useHistory()
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [infoDate, setInfoDate] = useState(null)
 
@@ -78,7 +76,7 @@ const Calendar = props => {
 
     eventClick({ event: clickedEvent }) {
       console.log('even click', clickedEvent)
-      history.push('/detail', { eventId: clickedEvent._def.publicId })
+      props.history.push('/detail/' + clickedEvent._def.publicId)
 
       // * Only grab required field otherwise it goes in infinity loop
       // ! Always grab all fields rendered by form (even if it get `undefined`) otherwise due to Vue3/Composition API you might get: "object is not extensible"

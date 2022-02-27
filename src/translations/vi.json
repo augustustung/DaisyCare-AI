@@ -55,6 +55,7 @@
     "english": "Tiếng anh",
     "staffName": "Nhập tên nhân viên",
     "required": "Không hợp lệ",
-    "uploadImage": "Tải ảnh (tối đa 6)"
+    "uploadImage": "Tải ảnh (tối đa 6)",
+    "addStaffSuccess": "Thêm nhân viên thành công"
   }
 }

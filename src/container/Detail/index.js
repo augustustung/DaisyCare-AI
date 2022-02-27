@@ -3,15 +3,13 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { ChevronLeft } from 'react-feather'
 import { useTranslation } from 'react-i18next'
-import { useHistory, useLocation } from 'react-router'
 import './detail.scss'
 import Request from '../../services/request'
 
 const DEFAULT_FILTER = { filter: {}, skip: 0, limit: 20, startDate: moment().format("DD/MM/YYYY"), endDate: moment().format("DD/MM/YYYY") }
 
-function Detail() {
-  const history = useHistory()
-  const { state } = useLocation()
+function Detail(props) {
+  const history = props.history
   const [listEmployee, setListEmployee] = useState({
     data: [],
     total: 1
@@ -80,8 +78,8 @@ function Detail() {
     })
   }
 
-  useEffect(() => {
-    fetchListData({ id: state.eventId });
+  useEffect(() => {;
+    fetchListData({ id: window.location.pathname.split("/detail/")[1] });
   },[])
 
   return (

@@ -5,12 +5,16 @@ import { useDispatch } from 'react-redux'
 import { handleSignin } from '../../actions/index'
 import { useTranslation } from 'react-i18next'
 import Request from '../../services/request'
+import React from 'react'
 
 const LoginV1 = (props) => {
   const dispatch = useDispatch()
   const { t: translation } = useTranslation()
+  const [loading, setLoading] = React.useState(false)
 
   function handleSubmit(values) {
+    setLoading(true)
+
     Request({
       method: "POST",
       path: "/api/login",
@@ -30,6 +34,7 @@ const LoginV1 = (props) => {
           description: result.message
         })
       }
+      setLoading(false)
     })
   }
 
@@ -57,7 +62,7 @@ const LoginV1 = (props) => {
               <Input.Password size='middle' className='input-group-merge' id='login-password' />
             </Form.Item>
             <Form.Item>
-              <Button type='primary' htmlType="submit">
+              <Button loading={loading} type='primary' htmlType="submit">
                 {translation("landing.login")}
               </Button>
             </Form.Item>

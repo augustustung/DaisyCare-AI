@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import moment from 'moment'
 import Request from '../../services/request'
 import _ from 'lodash'
+import { xoa_dau } from '../../helper/common'
 
 const videoWidth = 720
 const videoHeight = 560
@@ -30,10 +31,12 @@ function FaceDetector(props) {
     const faceDescriptors = []
     for (const label of labels) {
       const descriptors = []
-      for (let i = 1; i <= 4; i++) {
-        const image = await faceapi.fetchImage(`${process.env.PUBLIC_URL}/data/${label}/${i}.jpeg`)
+      for (let i = 1; i <= 6; i++) {
+        const image = await faceapi.fetchImage(`${process.env.REACT_APP_API_URL}/Media/${xoa_dau(label)}/${i}.jpeg`)
         const detection = await faceapi.detectSingleFace(image).withFaceLandmarks().withFaceDescriptor()
-        descriptors.push(detection.descriptor)
+        if (detection && detection.descriptor) {
+          descriptors.push(detection.descriptor)
+        }
       }
       faceDescriptors.push(new faceapi.LabeledFaceDescriptors(label, descriptors))
     }
@@ -147,38 +150,39 @@ function FaceDetector(props) {
       handleStopVideo(),
       handleStopVideo(),
       handleStopVideo()
-    ])
+    ]).then(() => {
+      canvasRef?.current?.getContext('2d')?.clearRect(0, 0, videoWidth, videoHeight);
+    })
   }
 
   async function handleOnPlayVideo() {
     if (!initializing && faceMatcher !== null) {
       const displaySize = { width: videoWidth, height: videoHeight }
-      try {
-        timerId = setInterval(async () => {
-          canvasRef.current.innerHTML = await faceapi.createCanvasFromMedia(videoRef.current)
-          faceapi.matchDimensions(canvasRef.current, displaySize)
-          const detections = await faceapi.detectAllFaces(videoRef.current).withFaceLandmarks().withFaceDescriptors().withAgeAndGender()
-          const resizedDetections = faceapi.resizeResults(detections, displaySize)
-          // faceapi.draw.drawDetections(canvasRef.current, resizedDetections)
-          const detection = resizedDetections[0]
-          canvasRef.current.getContext('2d').clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
-          const employeeFound = await faceMatcher.findBestMatch(detection.descriptor).toString()
-          const drawBox = new faceapi.draw.DrawBox(detection.detection.box, {
-            label: employeeFound
-          })
-          drawBox.draw(canvasRef.current)
-          handleCheckAttendance({
-            age: detection.age,
-            gender: detection.gender,
-            name: employeeFound.split("(")[0].trim()
-          })
+      timerId = setInterval(async () => {
+          try {
+            canvasRef.current.innerHTML = await faceapi.createCanvasFromMedia(videoRef.current)
+            faceapi.matchDimensions(canvasRef.current, displaySize)
+            const detections = await faceapi.detectAllFaces(videoRef.current).withFaceLandmarks().withFaceDescriptors().withAgeAndGender()
+            const resizedDetections = faceapi.resizeResults(detections, displaySize)
+            // faceapi.draw.drawDetections(canvasRef.current, resizedDetections)
+            const detection = resizedDetections[0]
+            canvasRef.current.getContext('2d').clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+            if (detection && detection.descriptor) {
+              const employeeFound = await faceMatcher.findBestMatch(detection.descriptor).toString()
+              const drawBox = new faceapi.draw.DrawBox(detection.detection.box, {
+                label: employeeFound
+              })
+              drawBox.draw(canvasRef.current)
+              handleCheckAttendance({
+                age: detection.age,
+                gender: detection.gender,
+                name: employeeFound.split("(")[0].trim()
+              })
+            }
+          } catch(e) {
+            console.error(JSON.stringify(e))
+          }
         }, 3000)
-      } catch(e) {
-        notification.error({
-          message: "",
-          description: JSON.stringify(e)
-        })
-      }
     }
   }
   
@@ -244,6 +248,11 @@ function FaceDetector(props) {
     }
   }
 
+  function handleNavigateLogin() {
+    stopVideo()
+    props.history.push('/login')
+  }
+
   return (
     <>
       {
@@ -257,7 +266,7 @@ function FaceDetector(props) {
       }
       <div className="FaceDetector">
         <div className='w-100 d-flex justify-content-end'>
-          <Button type='primary' onClick={() => props.history.push('/login')}>{translation('landing.login')}</Button>
+          <Button type='primary' onClick={handleNavigateLogin}>{translation('landing.login')}</Button>
         </div>
         <div className='w-100 text-center FaceDetector_title'>Chấm công ngày {moment(new Date()).format('DD/MM/YYYY')}</div>
         <div className='row pt-3'>

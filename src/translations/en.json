@@ -55,6 +55,7 @@
     "english": "English",
     "staffName": "Enter staff's name",
     "required": "Not valid",
-    "uploadImage": "Upload image (maximum 6)"
+    "uploadImage": "Upload image (maximum 6)",
+    "addStaffSuccess": "Add staff successfully"
   }
 }
