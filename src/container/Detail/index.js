@@ -58,7 +58,7 @@ function Detail(props) {
       key: 'timeLeave',
       dataIndex: 'timeLeave',
       render: (value) => {
-        return moment(value).format("LLL")
+        return value ? moment(value).format("LLL") : ""
       }
     },
   ];
